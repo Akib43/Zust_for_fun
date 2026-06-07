@@ -1,0 +1,641 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-bg:           oklch(10% 0 0);
+  --color-surface:      oklch(16% 0 0);
+  --color-text:         oklch(93% 0 0);
+  --color-text-muted:   oklch(58% 0 0);
+  --color-primary:      oklch(68% 0.18 35);
+  --color-border:       oklch(22% 0 0);
+  --font-serif:         'Playfair Display', Georgia, serif;
+  --font-sans:          'Inter', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* Bugatti photo background */
+.bugatti-photo-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url('https://images.unsplash.com/photo-1635975229704-0a420e777a56?w=1920&q=85');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.bugatti-photo-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: oklch(8% 0 0 / 0.82);
+}
+
+body { background: #000; }
+
+/* ── Layout wrappers ─────────────────────────────────────── */
+.page { min-height: 100vh; }
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 7rem 1.5rem 6rem;
+  overflow: hidden;
+}
+.hero__glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 40% at 50% 30%, oklch(68% 0.18 35 / 0.12), transparent);
+}
+.hero__eyebrow { font-size:.65rem; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color:var(--color-primary); margin-bottom:1.25rem; }
+.hero__title { font-family:var(--font-serif); font-size:clamp(3rem,10vw,7rem); font-weight:900; line-height:1; margin-bottom:1.5rem; }
+.hero__sub { font-size:clamp(1rem,2.5vw,1.2rem); color:var(--color-text-muted); max-width:36rem; margin:0 auto; }
+.hero__scroll { margin-top:4rem; display:flex; flex-direction:column; align-items:center; gap:.75rem; }
+.hero__scroll-label { font-size:.6rem; letter-spacing:.3em; text-transform:uppercase; color:var(--color-text-muted); }
+.hero__scroll-line { width:1px; height:3rem; background:linear-gradient(to bottom,var(--color-primary),transparent); }
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider { display:flex; align-items:center; gap:1rem; padding:2rem 5%; }
+.divider__line { flex:1; height:1px; background:var(--color-border); }
+.divider__label { font-size:.6rem; font-weight:600; letter-spacing:.25em; text-transform:uppercase; color:var(--color-text-muted); white-space:nowrap; }
+
+/* ── Chapter ─────────────────────────────────────────────── */
+.chapter { max-width:64rem; margin:0 auto; padding:0 1.5rem 6rem; }
+.chapter__header { text-align:center; margin-bottom:3rem; position:relative; }
+.chapter__watermark { font-family:var(--font-serif); font-size:clamp(6rem,18vw,12rem); font-weight:900; line-height:1; user-select:none; pointer-events:none; position:absolute; inset-x:0; top:0; opacity:.04; color:var(--color-text); }
+.chapter__header-inner { position:relative; z-index:1; padding-top:1.5rem; }
+.chapter__eyebrow { font-size:.6rem; font-weight:600; letter-spacing:.25em; text-transform:uppercase; color:var(--color-primary); margin-bottom:.75rem; }
+.chapter__title { font-family:var(--font-serif); font-size:clamp(1.8rem,5vw,3.2rem); font-weight:900; line-height:1.15; margin-bottom:1.25rem; }
+.chapter__badge { display:inline-flex; align-items:center; gap:.375rem; padding:.25rem .875rem; border-radius:9999px; border:1px solid var(--color-primary); color:var(--color-primary); font-size:.75rem; font-weight:500; }
+.chapter__body { display:grid; gap:2.5rem; }
+@media(min-width:768px){ .chapter__body { grid-template-columns:2fr 3fr; gap:3rem; align-items:start; } }
+.chapter__story { order:2; }
+@media(min-width:768px){ .chapter__story { order:1; position:sticky; top:6rem; } }
+.chapter__quote-mark { font-size:4.5rem; line-height:1; opacity:.2; color:var(--color-primary); font-family:Georgia,serif; user-select:none; margin-bottom:.25rem; }
+.chapter__text { font-size:1.05rem; line-height:1.8; font-weight:300; color:var(--color-text); }
+.chapter__video-wrap { order:1; }
+@media(min-width:768px){ .chapter__video-wrap { order:2; } }
+.video-frame { border-radius:1rem; overflow:hidden; border:1px solid var(--color-border); }
+.video-ratio { position:relative; width:100%; padding-bottom:56.25%; }
+.video-ratio iframe { position:absolute; inset:0; width:100%; height:100%; }
+.chapter__next-hint { text-align:center; font-size:.7rem; letter-spacing:.15em; color:var(--color-text-muted); margin-top:1rem; }
+
+/* ── Epilogue ────────────────────────────────────────────── */
+.epilogue { border-top:1px solid var(--color-border); text-align:center; padding:6rem 1.5rem; }
+.epilogue__eyebrow { font-size:.6rem; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color:var(--color-primary); margin-bottom:1rem; }
+.epilogue__title { font-family:var(--font-serif); font-size:clamp(2rem,6vw,3.5rem); font-weight:900; margin-bottom:1.5rem; }
+.epilogue__body { max-width:36rem; margin:0 auto; font-size:1.1rem; line-height:1.75; color:var(--color-text-muted); }
+.epilogue__credit { margin-top:3rem; font-size:.6rem; letter-spacing:.3em; color:var(--color-border); }
+
+/* ── Music player ────────────────────────────────────────── */
+.music-player { position:fixed; bottom:1.5rem; right:1.5rem; z-index:100; display:flex; flex-direction:column; align-items:flex-end; gap:.5rem; }
+.music-panel { display:flex; flex-direction:column; align-items:flex-end; gap:.5rem; background:oklch(16% 0 0 / 0.92); border:1px solid var(--color-border); border-radius:1rem; padding:.875rem 1rem; min-width:11rem; backdrop-filter:blur(8px); }
+.music-panel__title { font-size:.65rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--color-primary); width:100%; text-align:center; }
+.music-panel__controls { display:flex; align-items:center; gap:.75rem; width:100%; }
+.music-panel__btn { width:2.25rem; height:2.25rem; border-radius:50%; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; background:var(--color-primary); color:#fff; transition:transform .15s; }
+.music-panel__btn:hover { transform:scale(1.1); }
+.music-panel__btn.playing { animation:pulse 2s ease-in-out infinite; }
+.volume-wrap { display:flex; align-items:center; gap:.5rem; width:100%; }
+.volume-icon { font-size:.85rem; flex-shrink:0; color:var(--color-text-muted); }
+.volume-slider { -webkit-appearance:none; appearance:none; flex:1; height:4px; border-radius:2px; background:var(--color-border); outline:none; cursor:pointer; accent-color:var(--color-primary); }
+.volume-slider::-webkit-slider-thumb { -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:var(--color-primary); cursor:pointer; }
+.volume-value { font-size:.65rem; font-variant-numeric:tabular-nums; color:var(--color-text-muted); min-width:2rem; text-align:right; }
+
+@keyframes pulse {
+  0%,100% { box-shadow:0 4px 20px oklch(68% 0.18 35 / 0.4); }
+  50%      { box-shadow:0 4px 32px oklch(68% 0.18 35 / 0.8); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BURNING RITUAL
+═══════════════════════════════════════════════════════════ */
+
+/* Ritual invoke section */
+.ritual-section {
+  padding: 5rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  overflow: hidden;
+}
+.ritual-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, oklch(50% 0.22 30 / 0.15), transparent);
+  pointer-events: none;
+}
+.ritual-section__eyebrow {
+  font-size: .65rem; font-weight: 700; letter-spacing: .35em;
+  text-transform: uppercase; color: #ff4500; margin-bottom: .75rem;
+}
+.ritual-section__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900; margin-bottom: .75rem;
+}
+.ritual-section__sub {
+  color: var(--color-text-muted); font-size: 1rem; margin-bottom: 2rem;
+}
+.ritual-form {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1rem;
+  max-width: 36rem; margin: 0 auto;
+}
+@media(min-width: 560px){ .ritual-form { flex-direction: row; } }
+
+.ritual-input {
+  flex: 1; width: 100%;
+  background: oklch(14% 0 0);
+  border: 1px solid oklch(35% 0.15 30);
+  border-radius: .75rem;
+  padding: .875rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.ritual-input::placeholder { color: oklch(45% 0 0); }
+.ritual-input:focus {
+  border-color: #ff4500;
+  box-shadow: 0 0 0 3px oklch(55% 0.22 30 / 0.25);
+}
+
+.ritual-btn {
+  white-space: nowrap;
+  padding: .875rem 1.75rem;
+  background: linear-gradient(135deg, #ff4500, #ff8c00);
+  border: none; border-radius: .75rem;
+  font-size: 1rem; font-weight: 700;
+  color: #fff; cursor: pointer;
+  letter-spacing: .05em;
+  transition: transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 20px oklch(55% 0.22 30 / 0.4);
+}
+.ritual-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px oklch(55% 0.22 30 / 0.6);
+}
+.ritual-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ── Full-screen burning overlay ─────────────────────────── */
+.ritual-overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: #000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  overflow: hidden;
+  animation: ritual-enter .4s ease-out;
+}
+
+@keyframes ritual-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.ritual-overlay.fading {
+  animation: ritual-exit 1.5s ease-in forwards;
+}
+@keyframes ritual-exit {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Screen flash on ignition */
+.ritual-overlay.igniting::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, oklch(60% 0.25 30 / 0.3), transparent 70%);
+  animation: screen-flash .6s ease-out;
+}
+@keyframes screen-flash {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Ground glow only — no fake candle flames ─────────────── */
+.fire-glow {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 45vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, #ff3300 0%, #aa1100 20%, transparent 65%),
+    radial-gradient(ellipse 50% 30% at 50% 100%, #ff6600 0%, transparent 50%);
+  pointer-events: none;
+  animation: glow-pulse 1.8s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+}
+@keyframes glow-pulse {
+  from { opacity: .7; transform: scaleX(1);    }
+  to   { opacity: 1;  transform: scaleX(1.05); }
+}
+
+/* ── Typed text display (top of screen) ─────────────────── */
+.burning-text-container {
+  position: absolute;
+  top: 8vh; left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  padding: 0 2rem;
+  max-width: 80vw;
+}
+.ritual-label {
+  font-size: .65rem; font-weight: 700;
+  letter-spacing: .4em; text-transform: uppercase;
+  color: #ff6600; margin-bottom: 1rem;
+  opacity: 0; animation: fade-in-label .8s ease forwards .3s;
+}
+@keyframes fade-in-label { to { opacity: 1; } }
+.burning-text {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 4vw, 2.8rem);
+  font-weight: 900; line-height: 1.2;
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: .1em;
+  filter: drop-shadow(0 0 20px #ff4400) drop-shadow(0 0 40px #ff2200);
+}
+.burn-char {
+  display: inline-block; color: transparent;
+  background: linear-gradient(to bottom, #fff7e0 0%, #ffcc44 30%, #ff6600 65%, #ff2200 100%);
+  -webkit-background-clip: text; background-clip: text;
+  opacity: 0; transform: translateY(20px) scale(.8);
+  animation: char-ignite .4s ease forwards;
+}
+@keyframes char-ignite {
+  0%   { opacity: 0; transform: translateY(25px) scale(.7); filter: blur(4px); }
+  60%  { opacity: 1; transform: translateY(-4px) scale(1.05); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* ── Ritual verse display ────────────────────────────────── */
+.ritual-verse-wrap {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  text-align: center;
+  pointer-events: none;
+  width: 90vw; max-width: 600px;
+}
+.ritual-verse-line {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #ffcc88;
+  letter-spacing: .04em;
+  line-height: 1.9;
+  text-shadow: 0 0 12px #ff4400, 0 0 30px #ff1100;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.ritual-verse-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ritual-verse-line.fading {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+/* Embers / sparks */
+.ember {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #ff8800;
+  box-shadow: 0 0 6px #ff4400;
+  animation: ember-float linear infinite;
+  pointer-events: none;
+}
+@keyframes ember-float {
+  0%   { transform: translateY(0) translateX(0)   scale(1);   opacity: 1; }
+  80%  { opacity: .6; }
+  100% { transform: translateY(-90vh) translateX(var(--dx,20px)) scale(.2); opacity: 0; }
+}
+
+/* Smoke wisps */
+.smoke {
+  position: absolute;
+  bottom: 38vh;
+  width: 60px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(50% 0 0 / 0.15), transparent);
+  animation: smoke-rise linear infinite;
+  pointer-events: none;
+  filter: blur(8px);
+}
+@keyframes smoke-rise {
+  0%   { transform: translateY(0) scale(.5); opacity: .3; }
+  100% { transform: translateY(-60vh) scale(3); opacity: 0; }
+}
+
+/* Close button */
+.ritual-close {
+  position: absolute; top: 1.25rem; right: 1.5rem; z-index: 20;
+  background: oklch(20% 0 0 / 0.8); border: 1px solid oklch(40% 0 0);
+  color: oklch(75% 0 0); width: 2.5rem; height: 2.5rem;
+  border-radius: 50%; font-size: 1.1rem; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.ritual-close:hover { background: #ff4400; color: #fff; border-color: #ff4400; }
+
+/* (TTS status removed) */
+
+/* ═══════════════════════════════════════════════════════════
+   BURNING DOLL
+═══════════════════════════════════════════════════════════ */
+
+.doll-wrap {
+  position: absolute;
+  bottom: 26vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8;
+  width: 140px;
+  animation: doll-enter .7s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+@keyframes doll-enter {
+  from { transform: translateX(-50%) translateY(30px) scale(.6); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0)    scale(1);  opacity: 1; }
+}
+
+/* Tremble while burning */
+.doll-wrap.burning {
+  animation:
+    doll-enter .7s cubic-bezier(.34,1.56,.64,1) forwards,
+    doll-shake .12s ease-in-out infinite;
+}
+
+@keyframes doll-shake {
+  0%  { transform: translateX(calc(-50% - 2px)) rotate(-1.5deg); }
+  25% { transform: translateX(calc(-50% + 2px)) rotate( 1.5deg); }
+  50% { transform: translateX(calc(-50% - 3px)) rotate(-2deg);   }
+  75% { transform: translateX(calc(-50% + 3px)) rotate( 2deg);   }
+  100%{ transform: translateX(calc(-50% - 2px)) rotate(-1.5deg); }
+}
+
+/* Charring progress – the SVG itself darkens & glows */
+.doll-svg {
+  width: 100%;
+  filter: drop-shadow(0 0 12px #ff4400) drop-shadow(0 0 28px #ff2200);
+  animation: doll-char 6s ease-in forwards;
+  animation-play-state: paused;
+}
+.doll-wrap.burning .doll-svg {
+  animation-play-state: running;
+}
+
+@keyframes doll-char {
+  0%   { filter: drop-shadow(0 0  4px #ff6600) drop-shadow(0 0 12px #ff2200);                  }
+  20%  { filter: drop-shadow(0 0 16px #ff4400) drop-shadow(0 0 36px #ff1100) brightness(1.15); }
+  50%  { filter: drop-shadow(0 0 20px #cc2200) drop-shadow(0 0 40px #880000) brightness(.75) saturate(.6); }
+  80%  { filter: drop-shadow(0 0 10px #660000) drop-shadow(0 0 20px #330000) brightness(.4)  saturate(.2); }
+  100% { filter: drop-shadow(0 0  4px #220000)                                brightness(.2)  saturate(0);  opacity:.5; }
+}
+
+/* Clip-path: fire eats doll from FEET → HEAD */
+.doll-clip-wrap {
+  position: relative;
+  clip-path: inset(0 0 0% 0);
+  animation: burn-feet-to-head 7s ease-in forwards;
+  animation-play-state: paused;
+  animation-delay: 1s;
+}
+.doll-wrap.burning .doll-clip-wrap {
+  animation-play-state: running;
+}
+@keyframes burn-feet-to-head {
+  0%   { clip-path: inset(0 0 0%   0); }
+  20%  { clip-path: inset(0 0 18%  0); }
+  40%  { clip-path: inset(0 0 40%  0); }
+  60%  { clip-path: inset(0 0 62%  0); }
+  80%  { clip-path: inset(0 0 84%  0); }
+  100% { clip-path: inset(0 0 100% 0); }
+}
+
+/* Glowing fire EDGE that rides up the clip boundary */
+.doll-fire-front {
+  position: absolute;
+  left: -18%;
+  width: 136%;
+  height: 55px;
+  bottom: 0;
+  background: linear-gradient(to top,
+    transparent 0%,
+    #ff2200 20%,
+    #ff6600 55%,
+    #ffcc44 78%,
+    transparent 100%
+  );
+  filter: blur(4px);
+  mix-blend-mode: screen;
+  z-index: 15;
+  pointer-events: none;
+  animation: fire-front-rise 7s ease-in forwards;
+  animation-play-state: paused;
+  animation-delay: 1s;
+  opacity: 0;
+}
+.doll-wrap.burning .doll-fire-front {
+  animation-play-state: running;
+}
+@keyframes fire-front-rise {
+  0%   { bottom: -2%;  opacity: 0;   height: 45px; }
+  5%   { bottom:  0%;  opacity: 1;   }
+  20%  { bottom: 16%;  opacity: 1;   height: 55px; }
+  40%  { bottom: 38%;  opacity: 1;   height: 60px; }
+  60%  { bottom: 58%;  opacity: 0.95; }
+  80%  { bottom: 80%;  opacity: 0.85; height: 50px; }
+  95%  { bottom: 96%;  opacity: 0.5;  height: 40px; }
+  100% { bottom: 100%; opacity: 0;   }
+}
+
+/* Char overlay – orange→red→black layer on top of doll */
+.doll-char-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: transparent;
+  animation: char-overlay 6s ease-in forwards;
+  animation-play-state: paused;
+  pointer-events: none;
+}
+.doll-wrap.burning .doll-char-overlay { animation-play-state: running; }
+@keyframes char-overlay {
+  0%   { opacity: 0; }
+  30%  { opacity: .3; background: radial-gradient(circle, #ff4400 0%, transparent 70%); }
+  60%  { opacity: .5; background: radial-gradient(circle, #990000 0%, transparent 70%); }
+  100% { opacity: .8; background: radial-gradient(circle, #1a0000 0%, transparent 70%); }
+}
+
+/* Doll candle flames removed */
+
+/* Doll SVG — charring filter while burning */
+.doll-wrap.burning .doll-svg {
+  animation: doll-char 7s ease-in forwards;
+  animation-delay: 0.8s;
+}
+@keyframes doll-char {
+  0%   { filter: drop-shadow(0 0  6px #ff4400) drop-shadow(0 0 16px #ff2200); }
+  25%  { filter: drop-shadow(0 0 18px #ff4400) drop-shadow(0 0 36px #ff1100) brightness(1.1); }
+  55%  { filter: drop-shadow(0 0 20px #cc2200) drop-shadow(0 0 40px #880000) brightness(0.75) saturate(0.5); }
+  80%  { filter: drop-shadow(0 0 10px #660000) drop-shadow(0 0 20px #330000) brightness(0.4) saturate(0.2); }
+  100% { filter: drop-shadow(0 0  4px #220000) brightness(0.15) saturate(0); opacity: 0.5; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RITUAL CIRCLE
+═══════════════════════════════════════════════════════════ */
+
+.ritual-circle-wrap {
+  position: absolute;
+  bottom: 8vh;
+  left: 50%;
+  transform: translateX(-50%) scale(0) rotate(-180deg);
+  transform-origin: center;
+  width: 520px;
+  height: 520px;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* POP in when igniting */
+.ritual-circle-wrap.visible {
+  animation: circle-pop 0.65s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes circle-pop {
+  0%   { transform:translateX(-50%) scale(0)    rotate(-180deg); opacity:0; }
+  65%  { transform:translateX(-50%) scale(1.08) rotate(  6deg);  opacity:1; }
+  100% { transform:translateX(-50%) scale(1)    rotate(  0deg);  opacity:1; }
+}
+
+/* Slow spin + intensifying glow while burning */
+.ritual-circle-wrap.burning {
+  animation:
+    circle-pop   0.65s cubic-bezier(.34,1.56,.64,1) forwards,
+    circle-spin  20s   linear                        infinite 0.65s,
+    circle-pulse 2s    ease-in-out                   infinite 0.65s;
+}
+@keyframes circle-spin  { to { transform: translateX(-50%) rotate(360deg); } }
+@keyframes circle-pulse {
+  0%,100% { filter: drop-shadow(0 0 8px  #ff4400) drop-shadow(0 0 16px #ff1100); }
+  50%     { filter: drop-shadow(0 0 20px #ff8800) drop-shadow(0 0 40px #ff4400); }
+}
+
+/* Draw-in effect on the outer ring (stroke-dasharray trick) */
+.rc-ring-outer {
+  stroke-dasharray: 880;
+  stroke-dashoffset: 880;
+  animation: ring-draw 1s ease-out forwards;
+}
+.ritual-circle-wrap.visible .rc-ring-outer,
+.ritual-circle-wrap.burning .rc-ring-outer {
+  animation: ring-draw 0.9s ease-out forwards;
+}
+@keyframes ring-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Inner ring draws in slightly after */
+.rc-ring-inner {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: ring-draw-inner 0.9s ease-out 0.25s forwards;
+}
+.ritual-circle-wrap.visible .rc-ring-inner,
+.ritual-circle-wrap.burning .rc-ring-inner {
+  animation: ring-draw-inner 0.9s ease-out 0.25s forwards;
+}
+@keyframes ring-draw-inner { to { stroke-dashoffset: 0; } }
+
+/* Segments flash in one by one */
+.rc-seg {
+  opacity: 0;
+}
+.ritual-circle-wrap.visible .rc-seg,
+.ritual-circle-wrap.burning .rc-seg {
+  animation: seg-flash 0.3s ease forwards;
+}
+.rc-seg:nth-child(1) { animation-delay:.4s !important; }
+.rc-seg:nth-child(2) { animation-delay:.5s !important; }
+.rc-seg:nth-child(3) { animation-delay:.55s !important; }
+.rc-seg:nth-child(4) { animation-delay:.6s !important; }
+@keyframes seg-flash {
+  0%   { opacity:0; }
+  50%  { opacity:.7; }
+  100% { opacity:.4; }
+}
+
+/* Star draws in */
+.rc-star {
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+}
+.ritual-circle-wrap.visible .rc-star,
+.ritual-circle-wrap.burning .rc-star {
+  animation: ring-draw 1.2s ease-out 0.3s forwards;
+}
+
+/* Runes fade in */
+.rc-rune {
+  opacity: 0;
+}
+.ritual-circle-wrap.visible .rc-rune,
+.ritual-circle-wrap.burning .rc-rune {
+  animation: rune-in 0.4s ease forwards;
+}
+.rc-rune:nth-child(1)  { animation-delay:.5s !important; }
+.rc-rune:nth-child(2)  { animation-delay:.6s !important; }
+.rc-rune:nth-child(3)  { animation-delay:.65s !important; }
+.rc-rune:nth-child(4)  { animation-delay:.7s !important; }
+.rc-rune:nth-child(5)  { animation-delay:.75s !important; }
+.rc-rune:nth-child(6)  { animation-delay:.8s !important; }
+.rc-rune:nth-child(7)  { animation-delay:.85s !important; }
+.rc-rune:nth-child(8)  { animation-delay:.9s !important; }
+@keyframes rune-in {
+  from { opacity:0; transform:scale(0.5); }
+  to   { opacity:1; transform:scale(1); }
+}
+
+/* Center dot pulses */
+.rc-center {
+  animation: center-pulse 1s ease-in-out infinite;
+}
+@keyframes center-pulse {
+  0%,100% { r:6;  opacity:.8; }
+  50%     { r:9;  opacity:1;  }
+}
+
+/* Pin/needle sparks that fly off the doll */
+.doll-spark {
+  position: absolute;
+  width: 3px;
+  height: 10px;
+  background: linear-gradient(to top, #ffcc00, transparent);
+  border-radius: 2px;
+  animation: spark-fly linear forwards;
+  animation-play-state: paused;
+}
+.doll-wrap.burning .doll-spark { animation-play-state: running; }
+
+@keyframes spark-fly {
+  0%   { transform: translateY(0)    rotate(var(--sa, 0deg)) scale(1); opacity: 1; }
+  100% { transform: translateY(-80px) rotate(var(--sa, 45deg)) scale(0); opacity: 0; }
+}
+
